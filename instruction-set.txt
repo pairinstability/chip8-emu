@@ -1,0 +1,52 @@
+instruction-set.txt
+
+symbols:
+- NNN: address
+- NN: 8-bit constant
+- N: 4-bit constant
+- X and Y: 4-bit register identifier
+- PC: program counter
+- I: 16-bit register
+- VN: one of the 16 available variables, 0-F
+
+
+Opcode | Mnemonic  | Description
+--------------------------------
+0000   | NOP       | No operation.
+00E0   | CLS       | Clears the screen.
+00EE   | RTS       | Returns from a subroutine.
+1NNN   | JMP       | Jumps to location NNN.
+2NNN   | CALL      | Calls subroutine at NNN by pushing address of the next
+       |           | instruction on the stack and setting the PC to the
+       |           | address contained in the instruction.
+3XNN   | SKIP.EQ   | Skips the next instruction if VX equals NN.
+4XNN   | SKIP.NE   | Skips the next instruction if VX does not equal NN.
+5XY0   | SKIP.EQ   | SKips the next instruction if VX equals VY.
+6XNN   | MVI       | Sets VX to NN.
+7XNN   | ADI       | Adds NN to VX (carry flag not changed).
+8XY0   | MOV.      | Sets VX to the value of VY.
+8XY1   | OR.       | Logical OR VX with VY.
+8XY2   | AND.      | Logical AND VX with VY.
+8XY3   | XOR.      | Logical XOR VX with VY.
+8XY4   | ADD.      | Add VY to VX.
+8XY5   | SUB.      | Subtract VY from VX. 
+8X06   | SHR.      | Stores the LSB of VX in VF and shifts VX to the right by 1.
+8XY7   | SUBB.     | Subtract VX from VY.
+8X0E   | SHL.      | Stores the MSB of VX in VF and shifts VX to the left by 1.
+9XY0   | SKIP.NE   | Skips the next instruction if VX does not equal VY.
+ANNN   | MVI       | Set I to NNN.
+BNNN   | JMP       | Jumps to location NNN plus V0.
+CXNN   | RNDMSK    | Get random byte and logical OR with VX.
+DXYN   | SPRITE    | Draws a sprite at coordinate (VX, VY) that has a width of
+       |           | 8 pixels and a height of N pixels.
+EX9E   | SKIPKEY.Y | Skips the next instruction if key stored in VX is pressed.
+EXA1   | SKIPKEY.N | Skips the next instruction if key stored in VX is not pressed.
+FX07   | MOV       | Sets VX to the value of the delay timer.
+FX0A   | KEY       | A key press is awaited and then stored in VX.
+FX15   | MOV       | Sets the delay timer to VX.
+FX18   | MOV       | Sets the sound timer to VX.
+FX1E   | ADI       | Adds VX to I.
+FX29   | SPRITECHAR| Sets I to location of sprite for the characterin VX.
+FX33   | MOVBCD    | Stores 3 digit decimal equivalent of VX.
+FX55   | MOVM      | Store V0 through VX at I.
+FX65   | MOVM      | Load V0 through VX at I
